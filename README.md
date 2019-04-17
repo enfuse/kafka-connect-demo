@@ -18,38 +18,42 @@ Clone repo:
 git clone git@github.com:davepmiller/kafka-connect.git
 ```
 
-[Reference for using local image](https://blogmilind.wordpress.com/2018/01/30/running-local-docker-images-in-kubernetes/)
+#### Using GKE Cloud
+* [gcloud setup](docs/gcloud-setup.md)
 
-Setup minikube:
+
+#### Using local setup with minikube:
+* [Reference for using local image](https://blogmilind.wordpress.com/2018/01/30/running-local-docker-images-in-kubernetes/)
+This might take awhile
 ```bash
-minikube start  # this might take awhile
-eval $(minikube docker-env)
+$ minikube start
+$ eval $(minikube docker-env)
 ```
 
-Build project and docker image:
+#### Build project and docker image:
 ```bash
-cd kafka-connect
-./gradlew build docker
+$ cd kafka-connect
+$ ./gradlew build docker
 ```
 
-Deploy application:
+#### Deploy application:
 ```bash
-kubectl run kafka-connect --image=com.enfuse.kafka.connect/kafka-connect --image-pull-policy=Never --port=8080
+$ kubectl run kafka-connect --image=com.enfuse.kafka.connect/kafka-connect --image-pull-policy=Never --port=8080
 ```
 
-Verify:
+#### Verify:
 ```bash
-kubectl get pods
+$ kubectl get pods
 ```
 
-Expose application locally:
+#### Expose application locally:
 ```bash
-kubectl expose deployment kafka-connect --type=NodePort
-minikube service kafka-connect
+$ kubectl expose deployment kafka-connect --type=NodePort
+$ minikube service kafka-connect
 ```
 
-Clean deployment:
+#### Clean deployment:
 ```bash
-kubectl delete service kafka-connect
-kubectl delete deployment kafka-connect
+$ kubectl delete service kafka-connect
+$ kubectl delete deployment kafka-connect
 ```
