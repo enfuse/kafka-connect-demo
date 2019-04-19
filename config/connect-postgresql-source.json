@@ -1,0 +1,14 @@
+{
+  "name": "test-postgres-jdbc",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "tasks.max": 1,
+    "connection.url": "jdbc:postgresql://10.19.241.210:5432/test",
+    "connection.user": "postgres",
+    "connection.password": "NG547UjlMN",
+    "mode": "incrementing",
+    "incrementing.column.name": "id",
+    "topic.prefix": "postgres-",
+    "table.whitelist": "data"
+  }
+}

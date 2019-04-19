@@ -35,3 +35,8 @@ $ brew uninstall kubernetes-cli
 $ gcloud container clusters list
 $ gcloud container clusters get-credentials enfuse-kafka-connect-gke --zone us-central1-a
 ```
+
+#### Connecting To Kafka APIs
+In the web interface, you can click on a service link, and then toward the bottom of the page
+you'll see a "port forwarding option", click this to get a command to enable local browser/curl access
+to the kafka API.

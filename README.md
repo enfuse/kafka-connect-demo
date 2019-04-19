@@ -19,7 +19,7 @@ git clone git@github.com:davepmiller/kafka-connect.git
 ```
 
 #### Using GKE Cloud
-* [gcloud setup](docs/gcloud-setup.md)
+* [gcloud](docs/gcloud.md)
 
 
 #### Using local setup with minikube:
