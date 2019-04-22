@@ -1,12 +1,13 @@
-package io.enfuse.kafka.connect.random.connector.source;
+package io.enfuse.kafka.connect.connector;
 
-import java.util.*;
-
-import io.enfuse.kafka.connect.random.connector.source.config.RandomLongSourceConnectorConfig;
+import io.enfuse.kafka.connect.connector.config.RandomLongSourceConnectorConfig;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import org.apache.kafka.connect.connector.Task;
 import org.apache.kafka.connect.source.SourceConnector;
 
-import static io.enfuse.kafka.connect.random.connector.source.config.RandomLongSourceConnectorConfig.API_ENDPOINT;
+import static io.enfuse.kafka.connect.connector.config.RandomLongSourceConnectorConfig.API_ENDPOINT;
 
 public class RandomLongSourceConnector extends SourceConnector {
     public static final String VERSION = "0.1.0";

@@ -1,6 +1,13 @@
-package io.enfuse.kafka.connect.random.connector.source;
+package io.enfuse.kafka.connect.connector;
 
-import io.enfuse.kafka.connect.random.connector.source.config.RandomLongSourceConnectorConfig;
+import io.enfuse.kafka.connect.connector.config.RandomLongSourceConnectorConfig;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -14,15 +21,7 @@ import org.apache.kafka.connect.source.SourceTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-
-import static io.enfuse.kafka.connect.random.connector.source.RandomLongSchemas.VALUE_SCHEMA;
+import static io.enfuse.kafka.connect.connector.RandomLongSchemas.VALUE_SCHEMA;
 
 public class RandomLongSourceTask extends SourceTask {
     private static Logger logger = LoggerFactory.getLogger(RandomLongSourceTask.class);
