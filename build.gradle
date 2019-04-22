@@ -24,12 +24,12 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.palantir.docker'
 
-group = 'com.enfuse.kafka.connect'
+group = 'io.enfuse.kafka.connect.random'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
 bootJar {
-	baseName = 'kafka-connect'
+	baseName = 'random-long'
 	version = '0.0.1'
 }
 
