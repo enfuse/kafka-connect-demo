@@ -1,11 +1,11 @@
-package io.enfuse.kafka.connect.random.api;
+package io.enfuse.kafka.connect.api;
 
 import java.util.Random;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RandomLong {
+public class RandomLongController {
     private static Random random = new Random();
 
     @GetMapping("/random/long")

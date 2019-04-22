@@ -1,4 +1,4 @@
-package io.enfuse.kafka.connect.random.connector.source;
+package io.enfuse.kafka.connect.connector;
 
 import org.apache.kafka.connect.data.Schema;
 import org.apache.kafka.connect.data.SchemaBuilder;

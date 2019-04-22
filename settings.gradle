@@ -4,3 +4,6 @@ pluginManagement {
 	}
 }
 rootProject.name = 'kafka-connect'
+include 'api'
+include 'connector'
+

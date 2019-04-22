@@ -1,12 +1,8 @@
-package io.enfuse.kafka.connect.random.connector.source.config;
+package io.enfuse.kafka.connect.connector.config;
 
+import java.util.Map;
 import org.apache.kafka.common.config.AbstractConfig;
 import org.apache.kafka.common.config.ConfigDef;
-
-import java.util.List;
-import java.util.Map;
-
-import static org.apache.kafka.common.config.ConfigDef.NO_DEFAULT_VALUE;
 
 public class RandomLongSourceConnectorConfig extends AbstractConfig {
 
@@ -32,7 +28,7 @@ public class RandomLongSourceConnectorConfig extends AbstractConfig {
 
     public static ConfigDef config() {
         return new ConfigDef()
-                .define(API_ENDPOINT, ConfigDef.Type.STRING, NO_DEFAULT_VALUE, ConfigDef.Importance.HIGH, API_ENDPOINT_DOC)
+                .define(API_ENDPOINT, ConfigDef.Type.STRING, "", ConfigDef.Importance.HIGH, API_ENDPOINT_DOC)
                 .define(TOPIC_CONFIG, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, TOPIC_DOC)
                 .define(SLEEP_CONFIG, ConfigDef.Type.INT, 60, ConfigDef.Importance.MEDIUM, SLEEP_DOC);
     }
