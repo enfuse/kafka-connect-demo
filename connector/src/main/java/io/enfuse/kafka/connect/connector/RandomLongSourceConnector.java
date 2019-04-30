@@ -4,10 +4,11 @@ import io.enfuse.kafka.connect.connector.config.RandomLongSourceConnectorConfig;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.connect.connector.Task;
 import org.apache.kafka.connect.source.SourceConnector;
 
-import static io.enfuse.kafka.connect.connector.config.RandomLongSourceConnectorConfig.API_ENDPOINT;
+import static io.enfuse.kafka.connect.connector.config.RandomLongSourceConnectorConfig.API_URL_CONFIG;
 
 public class RandomLongSourceConnector extends SourceConnector {
     public static final String VERSION = "0.1.0";
@@ -20,9 +21,7 @@ public class RandomLongSourceConnector extends SourceConnector {
     }
 
     @Override
-    public void stop() {
-        // No resources to release, nothing to do here
-    }
+    public void stop() {}
 
     @Override
     public Class<? extends Task> taskClass() {
@@ -32,8 +31,12 @@ public class RandomLongSourceConnector extends SourceConnector {
     @Override
     public List<Map<String, String>> taskConfigs(int maxTasks) {
         Map<String, String> config = randomLongSourceConnectorConfig.originalsStrings();
-        config.put(API_ENDPOINT, randomLongSourceConnectorConfig.getUrl());
+        config.put(API_URL_CONFIG, randomLongSourceConnectorConfig.getUrl());
         return Collections.singletonList(config);
+    }
+
+    public ConfigDef config() {
+        return RandomLongSourceConnectorConfig.config();
     }
 
     @Override

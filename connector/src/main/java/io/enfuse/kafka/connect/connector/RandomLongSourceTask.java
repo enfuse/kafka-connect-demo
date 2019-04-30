@@ -8,20 +8,17 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.apache.kafka.connect.data.Timestamp;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.apache.kafka.connect.source.SourceTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static io.enfuse.kafka.connect.connector.RandomLongSchemas.VALUE_SCHEMA;
+import static io.enfuse.kafka.connect.connector.util.RandomLongHttpClient.httpClient;
+import static io.enfuse.kafka.connect.connector.util.RandomLongSchemas.VALUE_SCHEMA;
 
 public class RandomLongSourceTask extends SourceTask {
     private static Logger logger = LoggerFactory.getLogger(RandomLongSourceTask.class);
@@ -60,24 +57,20 @@ public class RandomLongSourceTask extends SourceTask {
     }
 
     private List<SourceRecord> getSourceRecords() {
-        String randomValue = getRandomFromApi();
-
-        Map<String, String> sourcePartition = Collections.singletonMap("url", config.getUrl());
-        Map<String, Timestamp> sourceOffset = Collections.singletonMap("date", new Timestamp());
-
-        SourceRecord record = new SourceRecord(sourcePartition, sourceOffset, config.getTopic(), VALUE_SCHEMA, randomValue);
+        SourceRecord record = new SourceRecord(
+                null,
+                null,
+                config.getTopic(),
+                VALUE_SCHEMA,
+                getRandomLongFromApi());
         return Collections.singletonList(record);
     }
 
-    private String getRandomFromApi() {
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet(config.getUrl() + "/random/long");
-        HttpEntity entity;
+    private Long getRandomLongFromApi() {
+        HttpGet httpGet = new HttpGet("http://" + config.getUrl() + "/random/long");
 
-        try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
-            entity = response.getEntity();
-            EntityUtils.consume(entity);
-            return EntityUtils.toString(entity);
+        try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+            return Long.parseLong(EntityUtils.toString(response.getEntity()));
         } catch (ClientProtocolException e) {
             logger.error("Error consuming GET /random/long: {}", e);
         } catch (IOException e) {
