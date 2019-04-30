@@ -35,6 +35,7 @@ public class RandomLongSourceConnector extends SourceConnector {
         return Collections.singletonList(config);
     }
 
+    @Override
     public ConfigDef config() {
         return RandomLongSourceConnectorConfig.config();
     }
