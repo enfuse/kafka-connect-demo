@@ -9,7 +9,7 @@ public class RandomLongController {
     private static Random random = new Random();
 
     @GetMapping("/random/long")
-    java.lang.Long randomLong() {
+    Long randomLong() {
         return random.nextLong();
     }
 }
