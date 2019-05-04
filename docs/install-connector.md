@@ -5,7 +5,7 @@ For testing and development purposes, let's install a standalone connector. Thes
 
 ### Standalone mode
 
-1. Under this project's `/config` directory, you will find sample [randomlong-connect-standalone.properties](../config/randomlong-connect-standalone.properties) and [randomlong-connector.properties](../config/randomlong-connector.properties) files. 
+1. Under this project's `/config` directory, you will find sample [randomlong-connect-standalone.properties](../connector/config/randomlong-connect-standalone.properties) and [randomlong-connector.properties](../connector/config/randomlong-connector.properties) files. 
 First `cd` into the root of this project. 
 
     In `randomlong-connect-standalone.properties`, modify the address for your kafka brokers: 
@@ -60,7 +60,7 @@ To run the connector in distributed mode:
        bootstrap.servers=<replace with your kafka brokers ip address>:9092
        ```
  
-2. Copy the [randomlong-connect-distributed.properties](../config/randomlong-connect-distributed.properties) file 
+2. Copy the [randomlong-connect-distributed.properties](../connector/config/randomlong-connect-distributed.properties) file 
 into the `etc/kafka` directory in your kafka connect server with the following command: 
 
 	```bash
