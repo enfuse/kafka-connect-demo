@@ -95,13 +95,12 @@ See above step #4 from previous section.
       http://localhost:8086/connectors \
       -H 'Accept: */*' \
       -H 'Content-Type: application/json' \
-      -H 'Host: localhost:8086' \
       -d '{
         "name": "randomlong_source_connector",
         "config": {
             "connector.class": "io.enfuse.kafka.connect.connector.RandomLongSourceConnector",
             "api.url": "35.224.207.20:8080",
-            "topic": "randomlong_distributed_topic",
+            "topic": "randomlong_topic",
             "sleep.seconds": 5
         }
     }'
@@ -109,3 +108,57 @@ See above step #4 from previous section.
     ```
     
     > Don't forget to modify the value for `api.url` in your request body!
+    
+    
+### Docker Container with Custom Connector Pre-Installed
+
+You can deploy a connect server with your custom connector pre-installed. Under `/connector`, you can find a sample [`Dockerfile`](../connector/Dockerfile)
+
+1. Modify the env value for `CONNECT_BOOTSTRAP_SERVERS` in the Dockerfile. You can use the IP Address & port of your kafka brokers or the name of your headless kafka service.
+
+2. `cd` into the `/connector` directory.
+
+3. Build the docker image: 
+
+	```bash
+	$ docker build . -t randomlong-connector
+	```
+	
+4. Tag the docker image in preparation for pushing it to Google Container Registry: 
+
+	```bash
+	$ docker tag randomlong-connector us.gcr.io/enfuse-gke/randomlong-connector
+	```
+	
+5. Make sure your docker is authenticated to push to GCR:
+
+	```bash
+	$ gcloud auth configure-docker
+	```
+	
+6. Push the docker image to GCR: 
+
+	```bash
+	$ docker push us.gcr.io/enfuse-gke/randomlong-connector
+	```
+	
+7. Run the container:
+
+	```bash
+	$ kubectl run randomlong-connector --image=us.gcr.io/enfuse-gke/randomlong-connector --port=8083
+	```
+	
+8. Expose a service for the connector:
+
+	```bash
+	$ kubectl expose deployment randomlong-connector --type=ClusterIP --name=randomlong-connector-service
+	```
+	
+9. Port-forward to the randomlong connector container:
+
+	```bash
+	$ kubectl get pods // to get the name of your randomlong-connector pod
+	$ kubectl port-forward <randomlong-connector-pod-name> 8083:8083
+	```
+
+10. Follow step (6) from the above "Distributed Mode" section to submit a POST request that will start the connector.
