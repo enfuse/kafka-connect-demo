@@ -1,9 +1,10 @@
 # How to Install and Run a Custom Connector
 
 The Confluent Kafka Connect Server comes with binaries that allow you to start a connector in [standalone or distributed mode](https://docs.confluent.io/current/connect/userguide.html#standalone-vs-distributed). 
-For testing and development purposes, let's install a standalone connector. These instructions assume you already have Kafka and Kafka Connect clusters running in GKE.
+For testing and development purposes, you can install a standalone connector, but in production it is recommended to run in distributed mode. 
+These instructions assume you already have Kafka and Kafka Connect clusters running in GKE.
 
-### Standalone mode
+## Standalone mode
 
 1. Under this project's `/config` directory, you will find sample [randomlong-connect-standalone.properties](../connector/config/randomlong-connect-standalone.properties) and [randomlong-connector.properties](../connector/config/randomlong-connector.properties) files. 
 First `cd` into the root of this project. 
@@ -50,7 +51,7 @@ First `cd` into the root of this project.
 	/usr/bin/connect-standalone /etc/kafka/randomlong-connect-standalone.properties /etc/kafka/randomlong-connector.properties
 	```
 
-### Distributed mode
+## Distributed mode
 
 To run the connector in distributed mode:
 
@@ -99,7 +100,7 @@ See above step #4 from previous section.
         "name": "randomlong_source_connector",
         "config": {
             "connector.class": "io.enfuse.kafka.connect.connector.RandomLongSourceConnector",
-            "api.url": "35.224.207.20:8080",
+            "api.url": "<host>:8080",
             "topic": "randomlong_topic",
             "sleep.seconds": 5
         }
@@ -109,8 +110,7 @@ See above step #4 from previous section.
     
     > Don't forget to modify the value for `api.url` in your request body!
     
-    
-### Docker Container with Custom Connector Pre-Installed
+## Docker Container with Custom Connector Pre-Installed
 
 You can deploy a connect server with your custom connector pre-installed. Under `/connector`, you can find a sample [`Dockerfile`](../connector/Dockerfile)
 
@@ -162,3 +162,17 @@ You can deploy a connect server with your custom connector pre-installed. Under 
 	```
 
 10. Follow step (6) from the above "Distributed Mode" section to submit a POST request that will start the connector.
+
+## Using Mounted Volume
+
+1. Modify the `CONNECT_BOOTSTRAP_SERVERS` env variable in [`randomlong-connect-pod.yaml`](../connector/k8s/randomlong-connect-pod.yaml).
+
+2. To deploy a pod that runs the kafka connect base image with the randomlong connector pre-installed in an ephemeral volume:
+
+    ```bash
+    $ kubectl apply -f connector/k8s/randomlong-connect-pod.yaml
+    ```
+    
+    > Note: When the pod is removed, so are the ephemeral volumes it's mounted to.
+    
+3. As before, submit a POST request to start a randomlong connector worker in distributed mode (see previous sections).
