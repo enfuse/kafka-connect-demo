@@ -21,7 +21,7 @@ $ cd kafka-connect
 $ ./gradlew clean shadowJar
 ```
 
-* [Use Google Kubernetes Engine](docs/gcloud.md)
+* [Use Google Kubernetes Engine](docs/gcloud-setup.md)
 * [Use Minikube On Local Machine](docs/minikube-setup.md)
 * [How to Install and Run a Custom Connector](docs/install-connector.md)
 * [Helpful Links](docs/links.md)
