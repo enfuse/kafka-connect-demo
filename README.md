@@ -21,6 +21,7 @@ $ cd kafka-connect
 $ ./gradlew clean shadowJar
 ```
 
+* [Tutorial Blog Post](https://medium.com/enfuse-io/a-diy-guide-to-kafka-connectors-38ad7cd82e02)
 * [Use Google Kubernetes Engine](docs/gcloud-setup.md)
 * [Use Minikube On Local Machine](docs/minikube-setup.md)
 * [How to Install and Run a Custom Connector](docs/install-connector.md)
